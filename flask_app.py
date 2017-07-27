@@ -4,7 +4,6 @@ from flask_restful import reqparse, abort, Api, Resource
 from flask_cors import CORS, cross_origin
 import json
 import requests
-import urllib2
 import lxml.html
 import random
 import os
@@ -24,7 +23,8 @@ if its not, look up random lyric from Cardi B
 """
 class LyricalApi(Resource):
     def get(self):
-        json_data = request.get_json()
+        # this is not a post, so there is not json data..
+        json_data = {'artist':'none'}#request.get_json()
         if 'artist' not in json_data.keys():
             artist = 'cardi-b'
         else:
@@ -57,7 +57,7 @@ def get_random_lyric(artist_string):
                 break
         bar = half_bar_1+ ', '+half_bar_2
         song = song_file_name[:-4].replace('_'," ")
-        return bar, song_file_name[:-4]
+        return bar, song
 
 
 @app.route('/')
