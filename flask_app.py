@@ -9,7 +9,7 @@ import random
 import os
 
 app = Flask(__name__)
-app.secret_key = "v9rex04(_2n(e4ae?xd3xec=x1dda3bd+=1x92xe290-xf6x93Lxf3_kjdh78fu4bc"
+app.secret_key = "a_long_secret"
 #api
 api = Api(app)
 #cors for cross origin headers 
