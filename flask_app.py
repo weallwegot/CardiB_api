@@ -7,7 +7,7 @@ import requests
 import urllib2
 import lxml.html
 import random
-import urllib.request, urllib.error, urllib.parse
+import os
 
 app = Flask(__name__)
 app.secret_key = "v9rex04(_2n(e4ae?xd3xec=x1dda3bd+=1x92xe290-xf6x93Lxf3_kjdh78fu4bc"
@@ -34,17 +34,38 @@ class LyricalApi(Resource):
 
 def get_random_lyric(artist_string):
     if len(artist_string) > 0:
-        first_letter = artist_string[0]
-        base_url_for_az_lyrics = 'http://www.azlyrics.com/'
-        artist_specific_url = base_url_for_az_lyrics + first_letter + '/' + artist_string + '.html'
-        page = requests.get(artist_specific_url)
-        page_tree = lxml.html.fromstring(all_articles_page.content)
-        all_a_tags = page_tree.xpath('//html//a')
+        # first_letter = artist_string[0]
+        # base_url_for_az_lyrics = 'http://www.azlyrics.com/'
+        # artist_specific_url = base_url_for_az_lyrics + first_letter + '/' + artist_string + '.html'
+        # page = requests.get(artist_specific_url)
+        # page_tree = lxml.html.fromstring(all_articles_page.content)
+        # all_a_tags = page_tree.xpath('//html//a')
+        working_dir = os.path.dirname(os.path.abspath(__file__))
+        data_folder_path = working_dir + os.sep + "data_bc_webscraper_blocked" + os.sep + "cardi_b"
+        g = os.listdir(data_folder_path)
+        song_file_name = random.choice(g)
+        txt_file = open(data_folder_path+os.sep+song_file_name,'r').readlines()
+        # for line in txt_file:
+        #     print(line + "Length: " + str(len(line)))
+        while(True):
+            ind = random.choice(range(len(txt_file)))
+            half_bar_1 = txt_file[ind]
+            half_bar_2 = txt_file[ind+1]
+            if (len(half_bar_1) == 1 ) or (len(half_bar_2) == 1):
+                continue
+            else:
+                break
+        bar = half_bar_1+ ', '+half_bar_2
+        song = song_file_name[:-4].replace('_'," ")
+        return bar, song_file_name[:-4]
 
 
 
+# print(str(get_random_lyric('b')))
 
-api.add_resource(BotAPI, '/api/v1')
+
+
+api.add_resource(LyricalApi, '/api/v1')
 
 
 if __name__ == "__main__":
