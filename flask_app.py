@@ -55,7 +55,7 @@ def get_random_lyric(artist_string):
                 continue
             else:
                 break
-        bar = half_bar_1+ ', '+half_bar_2
+        bar = half_bar_1+half_bar_2
         song = song_file_name[:-4].replace('_'," ")
         return bar, song
 
