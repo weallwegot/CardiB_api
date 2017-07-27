@@ -60,7 +60,9 @@ def get_random_lyric(artist_string):
         return bar, song_file_name[:-4]
 
 
-
+@app.route('/')
+def hello_world():
+    return 'Hello You Have Reached The Cardi B Lyrics Api, send a get request to "cardibbars.pythonanywhere.com/api/v1"!'
 # print(str(get_random_lyric('b')))
 
 
