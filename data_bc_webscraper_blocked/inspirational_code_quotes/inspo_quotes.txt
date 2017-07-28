@@ -1,0 +1,378 @@
+Quote:Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live.
+Author:Martin Golding
+Quote:All computers wait at the same speed.
+Author:Unknown
+Quote:A misplaced decimal point will always end up where it will do the greatest damage.
+Author:Unknown
+Quote:A good programmer looks both ways before crossing a one-way street.
+Author:Unknown
+Quote:A computer program does what you tell it to do, not what you want it to do.
+Author:Unknown
+Quote:"Intel Inside" is a Government Warning required by Law.
+Author:Unknown
+Quote:Common sense gets a lot of credit that belongs to cold feet.
+Author:Arthur Godfrey
+Quote:Chuck Norris doesn’t go hunting. Chuck Norris goes killing.
+Author:Unknown
+Quote:Chuck Norris counted to infinity... twice.
+Author:Unknown
+Quote:C is quirky, flawed, and an enormous success.
+Author:Unknown
+Quote:Beta is Latin for still doesn’t work.
+Author:Unknown
+Quote:ASCII stupid question, get a stupid ANSI!
+Author:Unknown
+Quote:Artificial Intelligence usually beats natural stupidity.
+Author:Unknown
+Quote:Any fool can use a computer. Many do.
+Author:Ted Nelson
+Quote:Hey! It compiles! Ship it!
+Author:Unknown
+Quote:Hate cannot drive out hate; only love can do that.
+Author:Martin Luther King Junior
+Quote:Guns don’t kill people. Chuck Norris kills people.
+Author:Unknown
+Quote:God is real, unless declared integer.
+Author:Unknown
+Quote:First, solve the problem. Then, write the code.
+Author:John Johnson
+Quote:Experience is the name everyone gives to their mistakes.
+Author:Oscar Wilde
+Quote:Every piece of software written today is likely going to infringe on someone else’s patent.
+Author:Miguel de Icaza
+Quote:Computers make very fast, very accurate mistakes.
+Author:Unknown
+Quote:Computers do not solve problems, they execute solutions.
+Author:Unknown
+Quote:I have NOT lost my mind—I have it backed up on tape somewhere.
+Author:Unknown
+Quote:If brute force doesn’t solve your problems, then you aren’t using enough.
+Author:Unknown
+Quote:It works on my machine.
+Author:Unknown
+Quote:Java is, in many ways, C++??.
+Author:Unknown
+Quote:Keyboard not found...Press any key to continue.
+Author:Unknown
+Quote:Life would be so much easier if we only had the source code.
+Author:Unknown
+Quote:Mac users swear by their Mac, PC users swear at their PC.
+Author:Unknown
+Quote:Microsoft is not the answer. Microsoft is the question. "No" is the answer.
+Author:Unknown
+Quote:MS-DOS isn’t dead, it just smells that way.
+Author:Unknown
+Quote:Only half of programming is coding. The other 90% is debugging.
+Author:Unknown
+Quote:Pasting code from the Internet into production code is like chewing gum found in the street.
+Author:Unknown
+Quote:Press any key to continue or any other key to quit.
+Author:Unknown
+Quote:Profanity is the one language all programmers know best.
+Author:Unknown
+Quote:The best thing about a boolean is even if you are wrong, you are only off by a bit.
+Author:Unknown
+Quote:The nice thing about standards is that there are so many to choose from.
+Author:Unknown
+Quote:There are 3 kinds of people: those who can count and those who can’t.
+Author:Unknown
+Quote:There is no place like 127.0.0.1
+Author:Unknown
+Quote:There is nothing quite so permanent as a quick fix.
+Author:Unknown
+Quote:There’s no test like production.
+Author:Unknown
+Quote:To err is human, but for a real disaster you need a computer.
+Author:Unknown
+Quote:Ubuntu is an ancient African word, meaning "can’t configure Debian"
+Author:Unknown
+Quote:UNIX is the answer, but only if you phrase the question very carefully.
+Author:Unknown
+Quote:Usenet is a Mobius strand of spaghetti.
+Author:Unknown
+Quote:Weeks of coding can save you hours of planning.
+Author:Unknown
+Quote:When your computer starts falling apart, stop hitting it with a Hammer!
+Author:Unknown
+Quote:Who is General Failure? And why is he reading my disk?
+Author:Unknown
+Quote:You can stand on the shoulders of giants OR a big enough pile of dwarfs, works either way.
+Author:Unknown
+Quote:You start coding. I’ll go find out what they want.
+Author:Unknown
+Quote:I love deadlines. I like the whooshing sound they make as they fly by.
+Author:Douglas Adams
+Quote:I think we agree, the past is over.
+Author:George W. Bush
+Quote:In order to be irreplaceable, one must always be different.
+Author:Coco Chanel
+Quote:In the future everyone will be famous for fifteen minutes.
+Author:Andy Warhol
+Quote:In three words I can sum up everything I’ve learned about life: it goes on.
+Author:Robert Frost
+Quote:It is a mistake to think you can solve any major problems just with potatoes.
+Author:Douglas Adams
+Quote:It’s kind of fun to do the impossible.
+Author:Walt Disney
+Quote:Java is to JavaScript what Car is to Carpet.
+Author:Chris Heilmann
+Quote:Judge a man by his questions rather than by his answers.
+Author:Voltaire
+Quote:Just don’t create a file called -rf.
+Author:Larry Wall
+Quote:Knowledge is power.
+Author:Francis Bacon
+Quote:Let’s call it an accidental feature.
+Author:Larry Wall
+Quote:Linux is only free if your time has no value.
+Author:Jamie Zawinski
+Quote:Measuring programming progress by lines of code is like measuring aircraft building progress by weight.
+Author:Bill Gates
+Quote:Never trust a computer you can’t throw out a window.
+Author:Steve Wozniak
+Quote:Nobody expects the Spanish inquisition.
+Author:Monty Python
+Quote:On the Internet, nobody knows you’re a dog.
+Author:Peter Steiner
+Quote:One man’s constant is another man’s variable.
+Author:Alan J. Perlis
+Quote:People that hate cats will come back as mice in their next life.
+Author:Faith Resnick
+Quote:Perl - The only language that looks the same before and after RSA encryption.
+Author:Keith Bostic
+Quote:PHP – Yeah, you know me.
+Author:PHPaughty by PHPature
+Quote:The future is here. It is just not evenly distributed yet.
+Author:William Gibson
+Quote:The greatest performance improvement of all is when a system goes from not-working to working.
+Author:John Ousterhout
+Quote:Software is like sex: It’s better when it’s free.
+Author:Linus Torvalds
+Quote:Sour, sweet, bitter, pungent, all must be tasted.
+Author:Chinese Proverb
+Quote:Stay hungry, stay foolish.
+Author:Whole Earth Catalog
+Quote:The artist belongs to his work, not the work to the artist.
+Author:Novalis
+Quote:The only "intuitive" interface is the nipple. After that it’s all learned.
+Author:Bruce Ediger
+Quote:The only completely consistent people are the dead.
+Author:Aldous Huxley
+Quote:The problem with troubleshooting is that trouble shoots back.
+Author:Unknown Author
+Quote:The three great virtues of a programmer: laziness, impatience, and hubris.
+Author:Larry Wall
+Quote:Time is an illusion. Lunchtime doubly so.
+Author:Douglas Adams
+Quote:When debugging, novices insert corrective code; experts remove defective code.
+Author:Richard Pattis
+Quote:When in doubt, leave it out.
+Author:Joshua Bloch
+Quote:Walking on water and developing software from a specification are easy if both are frozen.
+Author:Edward V Berard
+Quote:We cannot learn without pain.
+Author:Aristotle
+Quote:We have always been shameless about stealing great ideas.
+Author:Steve Jobs
+Quote:You can kill a man but you can’t kill an idea.
+Author:Medgar Evers
+Quote:You can never underestimate the stupidity of the general public.
+Author:Scott Adams
+Quote:You must have chaos in your soul to give birth to a dancing star.
+Author:Friedrich Nietzsche
+Quote:Without requirements or design, programming is the art of adding bugs to an empty "text" file.
+Author:Louis Srygley
+Quote:Sometimes it pays to stay in bed on Monday, rather than spending the rest of the week debugging Monday’s code.
+Author:Dan Salomon
+Quote:You miss 100 percent of the shots you never take.
+Author:Wayne Gretzky
+Quote:One of the biggest problems that software developers face is that technology changes rapidly. It is very hard to stay current.
+Author:Vivek Wadhwa
+Quote:Ideas want to be ugly.
+Author:Jason Santa Maria
+Quote:Developer: an organism that turns coffee into code.
+Author:Unknown
+Quote:One man´s crappy software is another man´s full time job.
+Author:Jessica Gaston
+Quote:It´s okay to figure out murder mysteries, but you shouldn´t need to figure out code. You should be able to read it.
+Author:Steve McConnell
+Quote:Programming languages, like pizzas, come in only two sizes: too big and too small.
+Author:Richard Pattis
+Quote:Programming today is a race between software engineers striving to build bigger and better idiot-proof programs, and the universe trying to produce bigger and better idiots. So far, the universe is winning.
+Author:Rich Cook
+Quote:Plan to throw one (implementation) away; you will, anyhow.
+Author:Fred Brooks
+Quote:Every good work of software starts by scratching a developer´s personal itch
+Author:Unknown
+Quote:Perfection (in design) is achieved not when there is nothing more to add, but rather when there is nothing more to take away.
+Author:Antoine de Saint-Exupery
+Quote:Prolific programmers contribute to certain disaster.
+Author:Niklaus Wirth
+Quote:Programming can be fun, so can cryptography; however they should not be combined.
+Author:Kreitzberg and Shneiderman
+Quote:It´s better to wait for a productive programmer to become available than it is to wait for the first available programmer to become productive.
+Author:Steve McConnell
+Quote:An organization that treats its programmers as morons will soon have programmers that are willing and able to act like morons only.
+Author:Bjarne Stroustrup
+Quote:Real programmers can write assembly code in any language.
+Author:Larry Wall
+Quote:The key to performance is elegance, not battalions of special cases.
+Author:Jon Bentley, Doug McIlroy
+Quote:Inside every large program, there is a program trying to get out.
+Author:C.A.R. Hoare
+Quote:Why do we never have time to do it right, but always have time to do it over?
+Author:Unknown
+Quote:The goal of Computer Science is to build something that will last at least until we´ve finished building it.
+Author:Unknown
+Quote:A good way to stay flexible is to write less code.
+Author:Pragmatic Programmer
+Quote:The best performance improvement is the transition from the nonworking state to the working state.
+Author:John Ousterhout
+Quote:No matter what the problem is, it´s always a people problem.
+Author:Gerald M. Weinberg
+Quote:Every big computing disaster has come from taking too many ideas and putting them in one place.
+Author:Gordon Bell
+Quote:Adding manpower to a late software project makes it later!
+Author:Fred Brooks
+Quote:The best way to get a project done faster is to start sooner
+Author:Jim Highsmith
+Quote:Even the best planning is not so omniscient as to get it right the first time.
+Author:Fred Brooks
+Quote:All you need is love. But a new pair of shoes never hurt anybody.
+Author:Unknown
+Quote:The best revenge is massive success.
+Author:Frank Sinatra
+Quote:Reality itself is too obvious to be true.
+Author:Jean Baudrillard
+Quote:Be yourself; everyone else is already taken.
+Author:Oscar Wilde
+Quote:Let me just change this one line of code…
+Author:Unknown
+Quote:Fast, Good, Cheap. Pick two.
+Author:Unknown
+Quote:Did you know? The collective noun for a group of programmers is a merge-conflict.
+Author:Unknown
+Quote:If there is no struggle, there is no progress.
+Author:Frederick Douglass
+Quote:You have to learn the rules of the game. And then you have to play better than anyone else.
+Author:Albert Einstein
+Quote:Learn from yesterday, live for today, hope for tomorrow. The important thing is not to stop questioning.
+Author:Albert Einstein
+Quote:Insanity: doing the same thing over and over again and expecting different results.
+Author:Albert Einstein
+Quote:A person who never made a mistake never tried anything new.
+Author:Albert Einstein
+Quote:Logic will get you from A to B. Imagination will take you everywhere.
+Author:Albert Einstein
+Quote:When the solution is simple, God is answering.
+Author:Albert Einstein
+Quote:If you can´t explain it simply, you don´t understand it well enough.
+Author:Albert Einstein
+Quote:If the facts don´t fit the theory, change the facts.
+Author:Albert Einstein
+Quote:It is a miracle that curiosity survives formal education.
+Author:Albert Einstein
+Quote:I only believe in statistics that I doctored myself.
+Author:Winston S. Churchill?
+Quote:Men and nations behave wisely when they have exhausted all other resources.
+Author:Abba Eban
+Quote:If you´re going through hell, keep going.
+Author:Unknown
+Quote:Success is not forever and failure isn´t fatal.
+Author:Don Shula
+Quote:I have never let my schooling interfere with my education.
+Author:Mark Twain
+Quote:The secret of getting ahead is getting started.
+Author:Mark Twain
+Quote:Get your facts first, then you can distort them as you please.
+Author:Mark Twain
+Quote:Apparently there is nothing that cannot happen today.
+Author:Mark Twain
+Quote:Plans are worthless, but planning is everything.
+Author:Dwight D. Eisenhower
+Quote:Before you marry a person you should first make them use a computer with slow Internet to see who they really are.
+Author:Will Ferrell
+Quote:I just invent, then wait until man comes around to needing what I´ve invented.
+Author:R. Buckminster Fuller
+Quote:The best way to make your dreams come true is to wake up.
+Author:Muriel Siebert
+Quote:If you can't write it down in English, you can't code it.
+Author:Peter Halpern
+Quote:Suspicion is healthy. It’ll keep you alive.
+Author:Laurell K. Hamilton
+Quote:People that hate cats will come back as mice in their next life.
+Author:Faith Resnick
+Quote:If your parents never had children, chances are you won’t, either.
+Author:Dick Cavett
+Quote:Sometimes I think we´re alone in the universe & sometimes I think we´re not. In either case the idea is quite staggering
+Author:Arthur C. Clarke
+Quote:Talk is cheap, show me the code!
+Author:Linus Torvalds
+Quote:They did not know it was impossible, so they did it!
+Author:Mark Twain
+Quote:You are what you share.
+Author:Charles Leadbeater
+Quote:You want it in one line? Does it have to fit in 80 columns?
+Author:Larry Wall
+Quote:The Internet? Is that thing still around?
+Author:Homer Simpson
+Quote:The journey is the destination.
+Author:Dan Eldon
+Quote:OO programming offers a sustainable way to write spaghetti code. It lets you accrete programs as a series of patches.
+Author:Paul Graham
+Quote:Ruby is rubbish! PHP is phpantastic!
+Author:Nikita Popov
+Quote:So long and thanks for all the fish!
+Author:Douglas Adams
+Quote:If I had more time, I would have written a shorter letter.
+Author:Cicero
+Quote:The best reaction to "this is confusing, where are the docs" is to rewrite the feature to make it less confusing, not write more docs.
+Author:Jeff Atwood
+Quote:The older I get, the more I believe that the only way to become a better programmer is by not programming.
+Author:Jeff Atwood
+Quote:"That hardly ever happens" is another way of saying "it happens".
+Author:Douglas Crockford
+Quote:Hello, PHP, my old friend.
+Author:Anna Debenham
+Quote:Organizations which design systems are constrained to produce designs which are copies of the communication structures of these organizations.
+Author:Melvin Conway
+Quote:In design, complexity is toxic.
+Author:Melvin Conway
+Quote:Good is the enemy of great, but great is the enemy of shipped.
+Author:Jeffrey Zeldman
+Quote:Don't make the user provide information that the system already knows.
+Author:Rick Lemons
+Quote:You're bound to be unhappy if you optimize everything.
+Author:Donald E. Knuth
+Quote:If the programmers like each other, they play a game called 'pair programming'. And if not then the game is called 'peer review'.
+Author:Anna Nachesa
+Quote:Simplicity is prerequisite for reliability.
+Author:Edsger W. Dijkstra
+Quote:Focus on WHY instead of WHAT in your code will make you a better developer
+Author:Jordi Boggiano
+Quote:The best engineers I know are artists at heart. The best designers I know are secretly technicians as well.
+Author:Andrei Herasimchuk
+Quote:Poor management can increase software costs more rapidly than any other factor.
+Author:Barry Boehm
+Quote:If you can't deploy your services independently then they aren't microservices.
+Author:Daniel Bryant
+Quote:If you can't deploy your services independently then they aren't microservices.
+Author:Daniel Bryant
+Quote:No one hates software more than software developers.
+Author:Jeff Atwood
+Quote:The proper use of comments is to compensate for our failure to express ourself in code.
+Author:Robert C. Martin
+Quote:Code is like humor. When you have to explain it, it's bad.
+Author:Cory House
+Quote:Fix the cause, not the symptom.
+Author:Steve Maguire
+Quote:Programmers are constantly making things more complicated than they need to be BECAUSE FUTURE. Fuck the future. Program for today.
+Author:David Heinemeier Hansson
+Quote:People will realize that software is not a product; you use it to build a product.
+Author:Linus Torvalds
+Quote:Design is choosing how you will fail.
+Author:Ron Fein
+Quote:Focus is saying no to 1000 good ideas.
+Author:Steve Jobs
+Quote:Code never lies, comments sometimes do.
+Author:Ron Jeffries
