@@ -20,7 +20,7 @@ working_dir = os.path.dirname(os.path.abspath(__file__))
 # the data folder
 data_folder_path = working_dir + os.sep + "data_bc_webscraper_blocked"
 # valid folder options as post values
-valid_options = ['james_baldwin','cardi_b','jay_z','nas','coding_quotes','kanye_west','lauryn_hill','tupac']
+valid_options = ['james_baldwin','cardi_b','jay_z','nas','inspirational_code','kanye_west','lauryn_hill','tupac']
 
 """
 LyricalApi class takes a get request
@@ -74,7 +74,7 @@ def get_random_lyric(category_array=None):
 
         return quote_or_lyric, song, author
     else:
-        valid_options = ['james_baldwin','cardi_b','jay_z','nas','inspirational_code','kanye_west','lauryn_hill','tupac']
+        #valid_options = ['james_baldwin','cardi_b','jay_z','nas','inspirational_code','kanye_west','lauryn_hill','tupac']
         valid_options_passed_in = set(valid_options) & set(category_array)
         if len(valid_options_passed_in) == 0:
             error_msg = 'You passed an invalid argument. Use one of the following ' + str(valid_options)
