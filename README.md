@@ -19,7 +19,7 @@ inspirational quotes for programming
 - Add deeper catalogue for each artist
 - see issues
 
-# Live at cardibbars.pythonanywhere.com/api/v1 
+# Live at http://cardibbars.pythonanywhere.com/api/v1
 
 If you send a `GET` request api will return a quote from any of those categories/people
 
