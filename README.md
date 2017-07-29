@@ -14,8 +14,7 @@ inspirational quotes for programming
 
 
 # To Do
-- Add more artists and have a 'POST' method that allows you specify artists
-    - Or specify a genre
+- Or specify a genre
 - Add deeper catalogue for each artist
 - see issues
 
@@ -28,11 +27,11 @@ If you send a `POST` include a JSON body with the following format:
 ```
 {
     method:"getQuote",
-    category: ['jay_z','coding_quotes']
+    category: ['jay_z','inspirational_code']
 }
 ```
 
-The format shown above will choose a random quote from either jay-z or the coding quotes catalogue.
+The format shown above will choose a random quote from either jay-z or the inspiring coding quotes catalogue.
 
 The total list of options are as follows:
 
@@ -47,4 +46,4 @@ The total list of options are as follows:
 'tupac'
 ```
 
-![forever](https://media.giphy.com/media/xjpTMrRIkYTqU/giphy.gif)
+
