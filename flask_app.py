@@ -9,10 +9,10 @@ import random
 import os
 
 app = Flask(__name__)
-app.secret_key = "a_long_secret"
+app.secret_key = "86113d9(1!)4fi7439)5-2fa0-40abeiwjoi32#@*@#*#()D__FEqix))((-b9a1-a8aa3c4609e4"
 #api
 api = Api(app)
-#cors for cross origin headers 
+#cors for cross origin headers
 CORS(app)
 
 # the directory of the curent file
@@ -31,13 +31,16 @@ if its not, look up random lyric from Cardi B
 class LyricalApi(Resource):
     def get(self):
         lyric, song, artist = get_random_lyric()
+        print('lyric: ' + str(lyric))
+        print('song: ' + str(song))
+        print('artist: ' +str(artist))
         return {'meta':{'code':200},'data':{'lyric':lyric, 'song':song, 'author':artist}}
     def post(self):
         json_data = request.get_json()
         if 'method' in json_data.keys() and 'category' in json_data.keys():
             method_string = json_data['method'] # right now this is unused
             category_list = json_data['category'] # this is the "category" of quote. could be an artist or genre or inspirational
-            print(str(category_list))
+            print('arguments passed: ' + str(category_list))
             if len(category_list) == 0:
                 category_list = None
             lyric, song, artist = get_random_lyric(category_list)
@@ -47,7 +50,7 @@ class LyricalApi(Resource):
             else:
                 return {'meta':{'code':200},'data':{'lyric':lyric, 'song':song, 'author':artist}}
         else:
-            
+
             error_msg = 'Please include a category key in your JSON with an array specifying the type of random quote you would like.'
             error_msg += ' Your options are as follows: ' + str(valid_options)
             error_msg += ' Or, use a GET request with no parameters.'
@@ -78,6 +81,7 @@ def get_random_lyric(category_array=None):
         valid_options_passed_in = set(valid_options) & set(category_array)
         if len(valid_options_passed_in) == 0:
             error_msg = 'You passed an invalid argument. Use one of the following ' + str(valid_options)
+            print("Passed Invalid Args Message: " + error_msg)
             return '','',''
             #
         else:
@@ -99,12 +103,13 @@ def get_random_lyric(category_array=None):
                 author = ' '.join(cat_folder.split('_')[:-1])
 
             return quote_or_lyric, the_song, author
-        
+
 def drill_down_and_get_file_and_song(category_file_name_arg=None):
     # the directory of the curent file
     working_dir = os.path.dirname(os.path.abspath(__file__))
     # the data folder
     data_folder_path = working_dir + os.sep + "data_bc_webscraper_blocked"
+    print("Reached data folder path: " + str(data_folder_path))
     # a random category within the folder
     if not category_file_name_arg:
         sub_directories_of_data = [sub_dir for sub_dir in os.listdir(data_folder_path) if '.' not in sub_dir]
@@ -118,10 +123,11 @@ def drill_down_and_get_file_and_song(category_file_name_arg=None):
     last_file_name = random.choice(os.listdir(path_to_chosen_category))
     # full path to txt file
     full_path = path_to_chosen_category+os.sep+last_file_name
+    print("Reached full path: " + str(full_path))
     my_file = open(full_path,'r').readlines()
 
     potential_song = ''
-    # if the file isnt a lyrics 
+    # if the file isnt a lyrics
     if 'quotes' in catetgory_file_name.split('_'):
         potential_song = ''
     elif 'lyrics' in catetgory_file_name.split('_'):
@@ -157,6 +163,7 @@ def piece_necessary_info_together(txt_file_lines,song):
             else:
                 break
         bar = half_bar_1+half_bar_2+half_bar_3+half_bar_4
+        print("Valid bar composed: " + str(bar))
         author = None
         # author is left blank bc its a song, the author is in the parent directory name
         return bar, author
@@ -173,9 +180,10 @@ def piece_necessary_info_together(txt_file_lines,song):
                 break
         quote = hopefully_quote[6:]
         author = hopefully_author[7:]
+        print("Valid quote and author found: " + str(quote) + " " + str(author))
         return quote, author
 
-        
+
 
 
 @app.route('/')
