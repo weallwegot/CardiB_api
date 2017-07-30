@@ -1,3 +1,9 @@
+<!DOCTYPE html>
+<html>
+<title>Bars API Docs</title>
+
+<xmp id="xmpting" theme="" style="display:none;">
+
 # CardiB_api
 an api to get a random BAR from cardi b's already impressive catalogue of quotables
 Unfortunately azlyrics.com has some webcrawling blockers, so right now theres just a couple measly text files sitting on a server somewhere. But hopefully there are enough bars to get this off the ground.
@@ -45,5 +51,30 @@ The total list of options are as follows:
 'lauryn_hill'
 'tupac'
 ```
+</xmp>
+<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
 
 
+<script type="text/javascript">
+    var xmpContainer = document.getElementById('xmpting')
+    const themeArray = [
+        'slate',
+        'united',
+        'spacelab',
+        'spruce',
+        'readable',
+        'cyborg',
+        'amelia',
+        'cerulean',
+        'simplex',
+        'simplex',
+        'simplex',
+        'journal',
+        'readable',
+        'superhero'
+    ]
+    var themeSelected = themeArray[Math.floor(Math.random()*themeArray.length)];
+    xmpContainer.setAttribute('theme',themeSelected)
+
+</script>
+</html>

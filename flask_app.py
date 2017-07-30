@@ -180,7 +180,8 @@ def piece_necessary_info_together(txt_file_lines,song):
 
 @app.route('/')
 def hello_world():
-    return 'Hello You Have Reached The Cardi B Lyrics Api, send a get request to "cardibbars.pythonanywhere.com/api/v1"!'
+    return render_template('index.html')
+    #return 'Hello You Have Reached The Cardi B Lyrics Api, send a get request to "cardibbars.pythonanywhere.com/api/v1"!'
 # print(str(get_random_lyric('b')))
 
 
