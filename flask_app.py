@@ -7,6 +7,14 @@ import requests
 import lxml.html
 import random
 import os
+import logging
+
+from constants import VALID_OPTIONS
+
+logging.basicConfig(format='%(asctime)s %(message)s',
+ datefmt='%m/%d/%Y %I:%M:%S %p',
+ filename='cardibAPI.log',
+ level=logging.DEBUG)
 
 app = Flask(__name__)
 app.secret_key = "86113d9(1!)4fi7439)5-2fa0-40abeiwjoi32#@*@#*#()D__FEqix))((-b9a1-a8aa3c4609e4"
@@ -19,41 +27,42 @@ CORS(app)
 working_dir = os.path.dirname(os.path.abspath(__file__))
 # the data folder
 data_folder_path = working_dir + os.sep + "data_bc_webscraper_blocked"
-# valid folder options as post values
-valid_options = ['james_baldwin','cardi_b','jay_z','nas','inspirational_code','kanye_west','lauryn_hill','tupac']
 
 """
-LyricalApi class takes a get request
+LyricalApi class takes a GET request
 parses the keys, if the artist key is present
 look up random lyric from said artist
 if its not, look up random lyric from Cardi B
+
+TODO: use jsonify instead of this weird lil custom dictionary thing, no?
 """
 class LyricalApi(Resource):
     def get(self):
         lyric, song, artist = get_random_lyric()
-        print('lyric: ' + str(lyric))
-        print('song: ' + str(song))
-        print('artist: ' +str(artist))
+        logging.debug('lyric: {}\nsong: {}\nartist: {}\n'.
+            format(lyric,song,artist))
         return {'meta':{'code':200},'data':{'lyric':lyric, 'song':song, 'author':artist}}
     def post(self):
         json_data = request.get_json()
         if 'method' in json_data.keys() and 'category' in json_data.keys():
             method_string = json_data['method'] # right now this is unused
             category_list = json_data['category'] # this is the "category" of quote. could be an artist or genre or inspirational
-            print('arguments passed: ' + str(category_list))
+            logging.debug('arguments passed: {}'.format(category_list))
             if len(category_list) == 0:
                 category_list = None
             lyric, song, artist = get_random_lyric(category_list)
             if lyric == song  == artist:
-                error_msg = 'You passed an invalid argument. Use one of the following ' + str(valid_options)
+                error_msg = 'You passed an invalid argument. Use one of the following {}'.format(VALID_OPTIONS)
+                logging.error(error_msg)
                 return {'meta':{'code':400},'error':{'code':400,'message':error_msg}}
             else:
                 return {'meta':{'code':200},'data':{'lyric':lyric, 'song':song, 'author':artist}}
         else:
 
             error_msg = 'Please include a category key in your JSON with an array specifying the type of random quote you would like.'
-            error_msg += ' Your options are as follows: ' + str(valid_options)
+            error_msg += ' Your options are as follows: \n{}'.format(VALID_OPTIONS)
             error_msg += ' Or, use a GET request with no parameters.'
+            logging.error(error_msg)
             return {'meta':{'code':400},'error':{'code':400,'message':error_msg}}
 
 def get_random_lyric(category_array=None):
@@ -66,7 +75,7 @@ def get_random_lyric(category_array=None):
         # page_tree = lxml.html.fromstring(all_articles_page.content)
         # all_a_tags = page_tree.xpath('//html//a')
 
-        txt_file,song,cat_folder= drill_down_and_get_file_and_song()
+        txt_file,song,cat_folder = drill_down_and_get_file_and_song()
 
         quote_or_lyric, author = piece_necessary_info_together(txt_file,song)
 
@@ -77,13 +86,12 @@ def get_random_lyric(category_array=None):
 
         return quote_or_lyric, song, author
     else:
-        #valid_options = ['james_baldwin','cardi_b','jay_z','nas','inspirational_code','kanye_west','lauryn_hill','tupac']
-        valid_options_passed_in = set(valid_options) & set(category_array)
+        # get the intersection of the available options and the options posted
+        valid_options_passed_in = set(VALID_OPTIONS) & set(category_array)
         if len(valid_options_passed_in) == 0:
-            error_msg = 'You passed an invalid argument. Use one of the following ' + str(valid_options)
-            print("Passed Invalid Args Message: " + error_msg)
+            error_msg = 'You passed an invalid argument. Use one of the following: {}'.format(VALID_OPTIONS)
+            logging.error("Passed Invalid Args Message: {}".format(error_msg))
             return '','',''
-            #
         else:
             chosen_option = random.choice(list(valid_options_passed_in))
             all_options_folder_names = os.listdir(data_folder_path)
@@ -109,25 +117,27 @@ def drill_down_and_get_file_and_song(category_file_name_arg=None):
     working_dir = os.path.dirname(os.path.abspath(__file__))
     # the data folder
     data_folder_path = working_dir + os.sep + "data_bc_webscraper_blocked"
-    print("Reached data folder path: " + str(data_folder_path))
+    logging.debug("Reached data folder path: {}".format(data_folder_path))
     # a random category within the folder
     if not category_file_name_arg:
+        # ignore folders that have dots in them, not sure what this would be.
         sub_directories_of_data = [sub_dir for sub_dir in os.listdir(data_folder_path) if '.' not in sub_dir]
         catetgory_file_name = random.choice(sub_directories_of_data)
     else:
         catetgory_file_name = category_file_name_arg
 
-    # the path to the category
+    # the path to the folder that contains data to said category
     path_to_chosen_category = data_folder_path + os.sep + catetgory_file_name
     # a random file within the chosen category
     last_file_name = random.choice(os.listdir(path_to_chosen_category))
     # full path to txt file
     full_path = path_to_chosen_category+os.sep+last_file_name
-    print("Reached full path: " + str(full_path))
+    logging.debug("Reached full path: {}".format(full_path))
+    # TODO: check if readlines method also closes the folder?
     my_file = open(full_path,'r').readlines()
 
     potential_song = ''
-    # if the file isnt a lyrics
+    # if the file isnt a lyrics the text file will be saved with a quotes in line ending
     if 'quotes' in catetgory_file_name.split('_'):
         potential_song = ''
     elif 'lyrics' in catetgory_file_name.split('_'):
@@ -137,14 +147,21 @@ def drill_down_and_get_file_and_song(category_file_name_arg=None):
     return my_file,potential_song,catetgory_file_name
 
 def are_bars_valid(bars_list):
+    """
+    Check to make sure the lines chosen don't have
+    something like the artists name in brackets
+    or [2x] or anything like that. We want a meaningful 4 lines
+    """
     check_if_bar_is_bad = lambda a:'[' in a or ']' in a or len(a) == 1 or '(' in a or ')' in a
     truth_array = [not check_if_bar_is_bad(bar) for bar in bars_list]
     return all(truth_array)
 
 def is_valid_quote_author_combo(combo_list_quote_first_author_second):
-    # the files have quote in front of the quotes
-    # and authors in front of the authors
-    # so check for them.
+    """
+    the files have quote in front of the quotes
+    and authors in front of the authors
+    so check for them.
+    """
     l = combo_list_quote_first_author_second
     return 'QUOTE' in l[0].split(':')[0].upper() and 'AUTHOR' in l[1].split(':')[0].upper()
 
@@ -163,12 +180,25 @@ def piece_necessary_info_together(txt_file_lines,song):
             else:
                 break
         bar = half_bar_1+half_bar_2+half_bar_3+half_bar_4
-        print("Valid bar composed: " + str(bar))
+        logging.info("Valid bar composed: {}".format(bar))
         author = None
         # author is left blank bc its a song, the author is in the parent directory name
         return bar, author
     # its not a song so expect a quote and an author
     else:
+        """
+        This is strange but okay.
+        Choose a random index from the file and hope that it is a quote
+        and then hope that the next line is an author lol
+        If it's not try another random index and hope some more.
+        Repeat until hope == reality 
+
+        I don't understand why the mod%2 operator wasnt used
+        since this file has all authors on even line numbers.
+        Maybe thats not always a valid assumption, I don't know.
+        Will all the quotes always be on one line? 
+        This very clearly needs to be ported to a DB
+        """
         while(True):
             ind = random.choice(range(len(txt_file_lines)-1))
             hopefully_quote = txt_file_lines[ind]
@@ -178,9 +208,11 @@ def piece_necessary_info_together(txt_file_lines,song):
                 continue
             else:
                 break
+        # cut out the number of letters in the word "quote " (peep the space)
         quote = hopefully_quote[6:]
+        # cut out the number of letters in the word "author " (peep the space)
         author = hopefully_author[7:]
-        print("Valid quote and author found: " + str(quote) + " " + str(author))
+        logging.info("Valid quote and author found: {} - {}".format(quote,author))
         return quote, author
 
 
@@ -190,7 +222,6 @@ def piece_necessary_info_together(txt_file_lines,song):
 def hello_world():
     return render_template('index.html')
     #return 'Hello You Have Reached The Cardi B Lyrics Api, send a get request to "cardibbars.pythonanywhere.com/api/v1"!'
-# print(str(get_random_lyric('b')))
 
 
 
