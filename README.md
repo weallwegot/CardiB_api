@@ -35,7 +35,8 @@ The total list of options are as follows:
 'inspirational_code'
 'kanye_west'
 'lauryn_hill'
-'tupac','2pac'
+'tupac'
+'2pac'
 'kehlani'
 'kendricklamar'
 'absoul'
@@ -55,7 +56,7 @@ The total list of options are as follows:
 'common'
 'macmiller'
 'domkennedy'
-'meekmill,
+'meekmill'
 'drake'
 'nas'
 'earlsweatshirt'
@@ -72,7 +73,7 @@ The total list of options are as follows:
 'schoolboyq'
 'isaiahrashad'
 'ti'
-'jadakiss',     
+'jadakiss'
 'tylerthecreator'
 'vicmensa'
 'jayz'
