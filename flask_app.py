@@ -75,9 +75,12 @@ class LyricalApi(Resource):
             logging.error(error_msg)
             return {'meta':{'code':400},'error':{'code':400,'message':error_msg}}
 
-def get_random_lyric(category_array=None):
-    # if there are no arguments, we will pick something random from db/.txt files
-    if not category_array:
+def get_random_lyric(category_array=[]):
+    """
+    if there are no arguments, we will pick something random from db/.txt files
+    or if there is one argument and it is the safe for work option
+    """
+    if (category_array == []) or ((len(category_array)==1) and (SAFE_4_WORK in category_array)):
         # first_letter = artist_string[0]
         # base_url_for_az_lyrics = 'http://www.azlyrics.com/'
         # artist_specific_url = base_url_for_az_lyrics + first_letter + '/' + artist_string + '.html'
