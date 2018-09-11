@@ -17,7 +17,13 @@ logging.basicConfig(format='%(asctime)s %(message)s',
  level=logging.DEBUG)
 
 app = Flask(__name__)
-app.secret_key = "86113d9(1!)4fi7439)5-2fa0-40abeiwjoi32#@*@#*#()D__FEqix))((-b9a1-a8aa3c4609e4"
+
+with open('k.txt') as f:
+    k = f.read()
+content = k.strip()
+
+app.secret_key = content
+
 #api
 api = Api(app)
 #cors for cross origin headers
