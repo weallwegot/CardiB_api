@@ -9,9 +9,10 @@ import random
 import os
 import logging
 import re
-
+import pdb
 from constants import VALID_OPTIONS, SAFE_4_WORK
 from utilities import contains_curse
+
 
 
 logging.basicConfig(format='%(asctime)s %(message)s',
@@ -80,17 +81,16 @@ def get_random_lyric(category_array=[]):
     if there are no arguments, we will pick something random from db/.txt files
     or if there is one argument and it is the safe for work option
     """
+    logging.debug('Category Array: '+str(category_array))
+    # pdb.set_trace()
+    # user wants curses if safe for work not in the category array
+    wants_curses = not SAFE_4_WORK in category_array
+    # if safe for work is only element in array, then get any song from any artist without curse words
     if (category_array == []) or ((len(category_array)==1) and (SAFE_4_WORK in category_array)):
-        # first_letter = artist_string[0]
-        # base_url_for_az_lyrics = 'http://www.azlyrics.com/'
-        # artist_specific_url = base_url_for_az_lyrics + first_letter + '/' + artist_string + '.html'
-        # page = requests.get(artist_specific_url)
-        # page_tree = lxml.html.fromstring(all_articles_page.content)
-        # all_a_tags = page_tree.xpath('//html//a')
 
         txt_file,song,cat_folder = drill_down_and_get_file_and_song()
 
-        quote_or_lyric, author = piece_necessary_info_together(txt_file,song)
+        quote_or_lyric, author = piece_necessary_info_together(txt_file,song,wants_curses)
 
         if not author:
             # if the author isnt determined in method above then it is the category folder name
@@ -110,26 +110,34 @@ def get_random_lyric(category_array=[]):
     else:
         # get the intersection of the available options and the options posted
         valid_options_passed_in = set(VALID_OPTIONS) & set(category_array)
-        wants_curses = True
-        # if user passes in SAFE_4_WORK parameter then they dont want any cursing in the bars
-        if SAFE_4_WORK in valid_options_passed_in:
-            wants_curses = False
+        # wants_curses = True
+        # # if user passes in SAFE_4_WORK parameter then they dont want any cursing in the bars
+        # if SAFE_4_WORK in valid_options_passed_in:
+        #     wants_curses = False
         if len(valid_options_passed_in) == 0:
             error_msg = 'You passed an invalid argument. Use one of the following: {}'.format(VALID_OPTIONS)
             logging.error("Passed Invalid Args Message: {}".format(error_msg))
             return '','',''
         else:
+            if not wants_curses:
+                # remove safe for work so it doesnt get picked in the random author selection
+                valid_options_passed_in.remove(SAFE_4_WORK)
             chosen_option = random.choice(list(valid_options_passed_in))
             all_options_folder_names = os.listdir(data_folder_path)
             chosen_option_quote = chosen_option+'_quotes'
             chosen_option_lyrics = chosen_option+'_lyrics'
+            logging.debug('Chosen option: '+chosen_option)
+            logging.debug('valid options passed in: '+str(valid_options_passed_in))
             if chosen_option_lyrics in all_options_folder_names:
                 the_file,the_song,cat_folder = drill_down_and_get_file_and_song(chosen_option_lyrics)
-                quote_or_lyric, author = piece_necessary_info_together(the_file,the_song,wants_curses)
+
+            elif chosen_option in all_options_folder_names:
+                the_file,the_song,cat_folder = drill_down_and_get_file_and_song(chosen_option)
 
             elif chosen_option_quote in all_options_folder_names:
                 the_file,the_song,cat_folder = drill_down_and_get_file_and_song(chosen_option_quote)
-                quote_or_lyric, author = piece_necessary_info_together(the_file,the_song,wants_curses)
+                
+            quote_or_lyric, author = piece_necessary_info_together(the_file,the_song,wants_curses)
 
             if not author:
                 # if the author isnt determined in method above then it is the category folder name
