@@ -16,6 +16,5 @@ def contains_curse(sometext):
 	:returns: a boolean stating whether we have a curse word or not
 	:rtype: Boolean
 	"""
-
-	return re.search(r'\b([f]+[a]+[g]+|[n]+[i]+[g]+[g]+|[s]+[h]+[i]+[t]+|[f]+[u]+[c]+[k]+|[b]+[i]+[t]+[c]+[h]+)\b',sometext.lower())
+	return re.search(r'bitch*|fag*|pussy|nigg*|fuck*|cunt*|shit*|dick*|cock*',sometext.lower())
 

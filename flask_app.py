@@ -187,7 +187,9 @@ def are_bars_valid(bars_list,cursing_allowed=True):
     check_if_bar_is_bad = lambda a:'[' in a or ']' in a or len(a) == 1 or '(' in a or ')' in a
     bar_validity_truth_array = [not check_if_bar_is_bad(bar) for bar in bars_list]
     if not cursing_allowed:
+
         curse = contains_curse(''.join(bars_list))
+        logging.debug('Contained a curse? {}'.format(curse))
         return (not curse) & all(bar_validity_truth_array)
 
     return all(bar_validity_truth_array)
@@ -222,7 +224,7 @@ def piece_necessary_info_together(txt_file_lines,song):
             half_bar_3 = txt_file_lines[ind+2]
             half_bar_4 = txt_file_lines[ind+3]
             bars_all = [half_bar_1,half_bar_2,half_bar_3,half_bar_4]
-            if not are_bars_valid(bars_all):
+            if not are_bars_valid(bars_all,cursing_allowed=False):
                 continue
             else:
                 break
