@@ -146,7 +146,7 @@ def drill_down_and_get_file_and_song(category_file_name_arg=None):
     # if the file isnt a lyrics the text file will be saved with a quotes in line ending
     if 'quotes' in catetgory_file_name.split('_'):
         potential_song = ''
-    elif 'lyrics' in catetgory_file_name.split('_'):
+    elif 'lyrics' in catetgory_file_name.split('_') or '_' not in catetgory_file_name:
         #cut out the .txt
         potential_song = last_file_name[:-4].replace('_'," ")
 
