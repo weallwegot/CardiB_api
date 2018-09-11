@@ -11,6 +11,7 @@ import logging
 import re
 
 from constants import VALID_OPTIONS
+from utilities import contains_curse
 
 
 logging.basicConfig(format='%(asctime)s %(message)s',
@@ -176,7 +177,7 @@ def drill_down_and_get_file_and_song(category_file_name_arg=None):
 
     return my_file_lines,potential_song,catetgory_file_name
 
-def are_bars_valid(bars_list):
+def are_bars_valid(bars_list,cursing_allowed=True):
     """
     Check to make sure the lines chosen don't have
     something like the artists name in brackets
@@ -184,8 +185,12 @@ def are_bars_valid(bars_list):
     Also check for the album info for the new type of folders
     """
     check_if_bar_is_bad = lambda a:'[' in a or ']' in a or len(a) == 1 or '(' in a or ')' in a
-    truth_array = [not check_if_bar_is_bad(bar) for bar in bars_list]
-    return all(truth_array)
+    bar_validity_truth_array = [not check_if_bar_is_bad(bar) for bar in bars_list]
+    if not cursing_allowed:
+        curse = contains_curse(''.join(bars_list))
+        return (not curse) & all(bar_validity_truth_array)
+
+    return all(bar_validity_truth_array)
 
 def is_valid_quote_author_combo(combo_list_quote_first_author_second):
     """
