@@ -16,7 +16,7 @@ VALID_OPTIONS = [
 'tupac','2pac',
 'kehlani',
 'kendricklamar'
-'absoul',				
+'absoul',
 'asaprocky',
 'lilboosie',
 'bigpun',

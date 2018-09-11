@@ -11,6 +11,7 @@ import logging
 
 from constants import VALID_OPTIONS
 
+
 logging.basicConfig(format='%(asctime)s %(message)s',
  datefmt='%m/%d/%Y %I:%M:%S %p',
  filename='cardibAPI.log',
@@ -89,6 +90,15 @@ def get_random_lyric(category_array=None):
             # if the author isnt determined in method above then it is the category folder name
             # split on _, get rid of 'lyric' or 'quote' [:-1], then make one string joined by space from list
             author = ' '.join(cat_folder.split('_')[:-1])
+            # this depends on old naming convention of 'artistname _lyrics'
+            # if this returns nothing or blank string, use cat folder
+            if author in ['',' ']:
+                author = cat_folder
+
+        logging.debug('Returning author: '+author)
+        logging.debug('Cat folder was: '+cat_folder)
+        logging.debug('Returning quote or lyric'+quote_or_lyric)
+        logging.debug('Returning song'+song)
 
         return quote_or_lyric, song, author
     else:
@@ -115,6 +125,16 @@ def get_random_lyric(category_array=None):
                 # if the author isnt determined in method above then it is the category folder name
                 # split on _, get rid of 'lyric' or 'quote' [:-1], then make one string joined by space from list
                 author = ' '.join(cat_folder.split('_')[:-1])
+                logging.debug('***** HIT SPLIT AUTHOR LOGIC*****')
+                # this depends on old naming convention of 'artistname _lyrics'
+                # if this returns nothing or blank string, use cat folder
+                if author in [' ','']:
+                    logging.debug('***** HIT BLANK AUTHOR LOGIC*****')
+                    author = cat_folder
+            logging.debug('Returning author: '+author)
+            logging.debug('Cat folder was: '+cat_folder)
+            logging.debug('Returning quote or lyric'+quote_or_lyric)
+            logging.debug('Returning song'+the_song)
 
             return quote_or_lyric, the_song, author
 
@@ -157,6 +177,7 @@ def are_bars_valid(bars_list):
     Check to make sure the lines chosen don't have
     something like the artists name in brackets
     or [2x] or anything like that. We want a meaningful 4 lines
+    Also check for the album info for the new type of folders
     """
     check_if_bar_is_bad = lambda a:'[' in a or ']' in a or len(a) == 1 or '(' in a or ')' in a
     truth_array = [not check_if_bar_is_bad(bar) for bar in bars_list]
