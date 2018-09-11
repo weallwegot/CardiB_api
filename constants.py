@@ -3,7 +3,9 @@ Keeping track of often used constants throughtout the program.
 
 ..moduleauthor: Olutosin Sonuyi <tosin.sonuyi@gmail.com>
 """
+SAFE_4_WORK = 'sfw'
 VALID_OPTIONS = [
+SAFE_4_WORK,
 'james_baldwin',
 'cardi_b',
 'jay_z',
