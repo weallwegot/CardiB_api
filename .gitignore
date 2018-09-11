@@ -6,7 +6,7 @@ __pycache__/
 # DS Store Mac Files
 **.DS_Store
 k.txt
-
+/data_bc_webscraper_blocked/*
 
 # C extensions
 *.so
