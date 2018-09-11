@@ -5,21 +5,27 @@
 <xmp id="xmpting" theme="simplex" style="display:none;">
 
 # CardiB_api
-An api to get a random BAR from an variety of different artists. They are listed below.
-The name of the service came because Cardi B inspired this project about a year ago because literally everyone of her songs had hella quotables in it. Fortunately the service has expanded to include a number of other artists as well some quotes from other notable writers and thought leaders such as James Baldwin.
 
-In case you are using this at work there is also an option called "safe for work" that can be enabled by passing in "sfw" as an entry in the category array. Sending "sfw" alone will get you any random quotable but will make sure it doesn't include curse words. If you send "sfw" in conjunction with specific artists you will only get quotes from those artists but again without any curse words. Not specifying "sfw" means you are open to the full variety of colorful language included within the API.
+An api to get a random BAR from a variety of different artists. 
+Cardi B inspired this project about a year ago because literally everyone of her songs had hella quotables in it. Fortunately the service has expanded to include a number of other sources of quotes and bars, but the name persists.
 
 
-# To Do
-- Or specify a genre
-- see [issues](https://github.com/weallwegot/CardiB_api/issues)
+In the case that you happen to be using this for your teminal at work there is also an option called "safe for work" that can be enabled via post request. Not specifying "sfw" means you are open to the full variety of colorful language included within the API.
+
+
+# Features To Add
+- Specify a genre
+- See [issues](https://github.com/weallwegot/CardiB_api/issues)
 
 # Live at http://cardibbars.pythonanywhere.com/api/v1
 
-If you send a `GET` request api will return a quote from any of those categories/people (curses words are highly probable)
+If you send a `GET` request the api will return a quote from any of those categories/people (curses words are highly probable)
 
-If you send a `POST` include a JSON body with the following format you are indicating to the api that you wont a quote from jay-z, earl sweatshirt, or the inspirational coding quotes catalogue but you don't mind curse words:
+If you send a `POST` include a JSON body with the format shown in the examples below.
+
+
+_Example 1_ 
+We are indicating to the api that we want a quote from jay-z, earl sweatshirt, or the inspirational coding quotes catalogue, however we don't mind curse words:
 
 ```
 {
@@ -28,7 +34,8 @@ If you send a `POST` include a JSON body with the following format you are indic
 }
 ```
 
-Another `POST` request format example, in this example you only want quotes from tyler the creator but you don't want any offensive language:
+_Example 2_
+Another `POST` request format example, in this example we only want quotes from tyler the creator but we don't want any offensive language:
 
 ```
 {
@@ -37,6 +44,7 @@ Another `POST` request format example, in this example you only want quotes from
 }
 ```
 
+_Example 3_
 And one more `POST` example for clarity; here we are indicating that we are open to quotes from any of the available sources, as long as they don't contain offensive language:
 
 ```
@@ -47,7 +55,7 @@ And one more `POST` example for clarity; here we are indicating that we are open
 ```
 
 
-The total list of options are as follows:
+The total list of options available via `POST` request is as follows:
 
 ```
 'sfw'
