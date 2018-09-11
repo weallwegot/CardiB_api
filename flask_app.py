@@ -8,6 +8,7 @@ import lxml.html
 import random
 import os
 import logging
+import re
 
 from constants import VALID_OPTIONS
 
@@ -160,7 +161,9 @@ def drill_down_and_get_file_and_song(category_file_name_arg=None):
     full_path = path_to_chosen_category+os.sep+last_file_name
     logging.debug("Reached full path: {}".format(full_path))
     # TODO: check if readlines method also closes the folder?
-    my_file = open(full_path,'r').readlines()
+    my_file = open(full_path,'r')
+    my_file_lines = my_file.readlines()
+    my_file.close()
 
     potential_song = ''
     # if the file isnt a lyrics the text file will be saved with a quotes in line ending
@@ -170,7 +173,7 @@ def drill_down_and_get_file_and_song(category_file_name_arg=None):
         #cut out the .txt
         potential_song = last_file_name[:-4].replace('_'," ")
 
-    return my_file,potential_song,catetgory_file_name
+    return my_file_lines,potential_song,catetgory_file_name
 
 def are_bars_valid(bars_list):
     """
@@ -196,7 +199,18 @@ def piece_necessary_info_together(txt_file_lines,song):
     # if it is a song expect the bar format, where 2 lines make a bar
     if len(song) > 0:
         while(True):
-            ind = random.choice(range(len(txt_file_lines)-4))
+            # find out where the album info piece is and exclude it from random choice
+            try:
+                idx_of_album_info = txt_file_lines.index('ALBUM INFO\r\n')
+            except ValueError:
+                #not every text file will have album info i.e. mixtapes and stuff
+                idx_of_album_info = len(txt_file_lines)
+
+            num_useful_lines = idx_of_album_info
+            logging.debug("Index of Last Useful Line: {}".format(num_useful_lines))
+            logging.debug("Number of lines in song: {}".format(len(txt_file_lines)))
+            # up to the 4 before the end of useful lines so we can construct a whole bar
+            ind = random.choice(range(num_useful_lines-4))
             half_bar_1 = txt_file_lines[ind]
             half_bar_2 = txt_file_lines[ind+1]
             half_bar_3 = txt_file_lines[ind+2]
