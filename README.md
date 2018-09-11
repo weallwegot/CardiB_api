@@ -37,7 +37,7 @@ The total list of options are as follows:
 'lauryn_hill'
 'tupac','2pac'
 'kehlani'
-'kendricklamar
+'kendricklamar'
 'absoul'
 'asaprocky'
 'lilboosie'
