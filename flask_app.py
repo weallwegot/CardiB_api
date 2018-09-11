@@ -19,8 +19,9 @@ logging.basicConfig(format='%(asctime)s %(message)s',
  level=logging.DEBUG)
 
 app = Flask(__name__)
-
-with open('k.txt') as f:
+# the directory of the curent file
+working_dir = os.path.dirname(os.path.abspath(__file__))
+with open(working_dir+os.sep+'k.txt') as f:
     k = f.read()
 content = k.strip()
 
@@ -232,12 +233,12 @@ def piece_necessary_info_together(txt_file_lines,song):
         Choose a random index from the file and hope that it is a quote
         and then hope that the next line is an author lol
         If it's not try another random index and hope some more.
-        Repeat until hope == reality 
+        Repeat until hope == reality
 
         I don't understand why the mod%2 operator wasnt used
         since this file has all authors on even line numbers.
         Maybe thats not always a valid assumption, I don't know.
-        Will all the quotes always be on one line? 
+        Will all the quotes always be on one line?
         This very clearly needs to be ported to a DB
         """
         while(True):
