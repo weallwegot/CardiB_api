@@ -10,7 +10,7 @@ import os
 import logging
 import re
 
-from constants import VALID_OPTIONS
+from constants import VALID_OPTIONS, SAFE_4_WORK
 from utilities import contains_curse
 
 
@@ -107,6 +107,10 @@ def get_random_lyric(category_array=None):
     else:
         # get the intersection of the available options and the options posted
         valid_options_passed_in = set(VALID_OPTIONS) & set(category_array)
+        wants_curses = True
+        # if user passes in SAFE_4_WORK parameter then they dont want any cursing in the bars
+        if SAFE_4_WORK in valid_options_passed_in:
+            wants_curses = False
         if len(valid_options_passed_in) == 0:
             error_msg = 'You passed an invalid argument. Use one of the following: {}'.format(VALID_OPTIONS)
             logging.error("Passed Invalid Args Message: {}".format(error_msg))
@@ -118,11 +122,11 @@ def get_random_lyric(category_array=None):
             chosen_option_lyrics = chosen_option+'_lyrics'
             if chosen_option_lyrics in all_options_folder_names:
                 the_file,the_song,cat_folder = drill_down_and_get_file_and_song(chosen_option_lyrics)
-                quote_or_lyric, author = piece_necessary_info_together(the_file,the_song)
+                quote_or_lyric, author = piece_necessary_info_together(the_file,the_song,wants_curses)
 
             elif chosen_option_quote in all_options_folder_names:
                 the_file,the_song,cat_folder = drill_down_and_get_file_and_song(chosen_option_quote)
-                quote_or_lyric, author = piece_necessary_info_together(the_file,the_song)
+                quote_or_lyric, author = piece_necessary_info_together(the_file,the_song,wants_curses)
 
             if not author:
                 # if the author isnt determined in method above then it is the category folder name
@@ -203,7 +207,7 @@ def is_valid_quote_author_combo(combo_list_quote_first_author_second):
     l = combo_list_quote_first_author_second
     return 'QUOTE' in l[0].split(':')[0].upper() and 'AUTHOR' in l[1].split(':')[0].upper()
 
-def piece_necessary_info_together(txt_file_lines,song):
+def piece_necessary_info_together(txt_file_lines,song,wants_curses=True):
     # if it is a song expect the bar format, where 2 lines make a bar
     if len(song) > 0:
         while(True):
@@ -224,7 +228,7 @@ def piece_necessary_info_together(txt_file_lines,song):
             half_bar_3 = txt_file_lines[ind+2]
             half_bar_4 = txt_file_lines[ind+3]
             bars_all = [half_bar_1,half_bar_2,half_bar_3,half_bar_4]
-            if not are_bars_valid(bars_all,cursing_allowed=False):
+            if not are_bars_valid(bars_all,cursing_allowed=wants_curses):
                 continue
             else:
                 break
