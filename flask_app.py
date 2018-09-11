@@ -9,8 +9,10 @@ import random
 import os
 import logging
 import re
+import pdb
+from constants import VALID_OPTIONS, SAFE_4_WORK
+from utilities import contains_curse
 
-from constants import VALID_OPTIONS
 
 
 logging.basicConfig(format='%(asctime)s %(message)s',
@@ -74,19 +76,21 @@ class LyricalApi(Resource):
             logging.error(error_msg)
             return {'meta':{'code':400},'error':{'code':400,'message':error_msg}}
 
-def get_random_lyric(category_array=None):
-    # if there are no arguments, we will pick something random from db/.txt files
-    if not category_array:
-        # first_letter = artist_string[0]
-        # base_url_for_az_lyrics = 'http://www.azlyrics.com/'
-        # artist_specific_url = base_url_for_az_lyrics + first_letter + '/' + artist_string + '.html'
-        # page = requests.get(artist_specific_url)
-        # page_tree = lxml.html.fromstring(all_articles_page.content)
-        # all_a_tags = page_tree.xpath('//html//a')
+def get_random_lyric(category_array=[]):
+    """
+    if there are no arguments, we will pick something random from db/.txt files
+    or if there is one argument and it is the safe for work option
+    """
+    logging.debug('Category Array: '+str(category_array))
+    # pdb.set_trace()
+    # user wants curses if safe for work not in the category array
+    wants_curses = not SAFE_4_WORK in category_array
+    # if safe for work is only element in array, then get any song from any artist without curse words
+    if (category_array == []) or ((len(category_array)==1) and (SAFE_4_WORK in category_array)):
 
         txt_file,song,cat_folder = drill_down_and_get_file_and_song()
 
-        quote_or_lyric, author = piece_necessary_info_together(txt_file,song)
+        quote_or_lyric, author = piece_necessary_info_together(txt_file,song,wants_curses)
 
         if not author:
             # if the author isnt determined in method above then it is the category folder name
@@ -106,22 +110,34 @@ def get_random_lyric(category_array=None):
     else:
         # get the intersection of the available options and the options posted
         valid_options_passed_in = set(VALID_OPTIONS) & set(category_array)
+        # wants_curses = True
+        # # if user passes in SAFE_4_WORK parameter then they dont want any cursing in the bars
+        # if SAFE_4_WORK in valid_options_passed_in:
+        #     wants_curses = False
         if len(valid_options_passed_in) == 0:
             error_msg = 'You passed an invalid argument. Use one of the following: {}'.format(VALID_OPTIONS)
             logging.error("Passed Invalid Args Message: {}".format(error_msg))
             return '','',''
         else:
+            if not wants_curses:
+                # remove safe for work so it doesnt get picked in the random author selection
+                valid_options_passed_in.remove(SAFE_4_WORK)
             chosen_option = random.choice(list(valid_options_passed_in))
             all_options_folder_names = os.listdir(data_folder_path)
             chosen_option_quote = chosen_option+'_quotes'
             chosen_option_lyrics = chosen_option+'_lyrics'
+            logging.debug('Chosen option: '+chosen_option)
+            logging.debug('valid options passed in: '+str(valid_options_passed_in))
             if chosen_option_lyrics in all_options_folder_names:
                 the_file,the_song,cat_folder = drill_down_and_get_file_and_song(chosen_option_lyrics)
-                quote_or_lyric, author = piece_necessary_info_together(the_file,the_song)
+
+            elif chosen_option in all_options_folder_names:
+                the_file,the_song,cat_folder = drill_down_and_get_file_and_song(chosen_option)
 
             elif chosen_option_quote in all_options_folder_names:
                 the_file,the_song,cat_folder = drill_down_and_get_file_and_song(chosen_option_quote)
-                quote_or_lyric, author = piece_necessary_info_together(the_file,the_song)
+                
+            quote_or_lyric, author = piece_necessary_info_together(the_file,the_song,wants_curses)
 
             if not author:
                 # if the author isnt determined in method above then it is the category folder name
@@ -176,7 +192,7 @@ def drill_down_and_get_file_and_song(category_file_name_arg=None):
 
     return my_file_lines,potential_song,catetgory_file_name
 
-def are_bars_valid(bars_list):
+def are_bars_valid(bars_list,cursing_allowed=True):
     """
     Check to make sure the lines chosen don't have
     something like the artists name in brackets
@@ -184,8 +200,14 @@ def are_bars_valid(bars_list):
     Also check for the album info for the new type of folders
     """
     check_if_bar_is_bad = lambda a:'[' in a or ']' in a or len(a) == 1 or '(' in a or ')' in a
-    truth_array = [not check_if_bar_is_bad(bar) for bar in bars_list]
-    return all(truth_array)
+    bar_validity_truth_array = [not check_if_bar_is_bad(bar) for bar in bars_list]
+    if not cursing_allowed:
+
+        curse = contains_curse(''.join(bars_list))
+        logging.debug('Contained a curse? {}'.format(curse))
+        return (not curse) & all(bar_validity_truth_array)
+
+    return all(bar_validity_truth_array)
 
 def is_valid_quote_author_combo(combo_list_quote_first_author_second):
     """
@@ -196,7 +218,7 @@ def is_valid_quote_author_combo(combo_list_quote_first_author_second):
     l = combo_list_quote_first_author_second
     return 'QUOTE' in l[0].split(':')[0].upper() and 'AUTHOR' in l[1].split(':')[0].upper()
 
-def piece_necessary_info_together(txt_file_lines,song):
+def piece_necessary_info_together(txt_file_lines,song,wants_curses=True):
     # if it is a song expect the bar format, where 2 lines make a bar
     if len(song) > 0:
         while(True):
@@ -217,7 +239,7 @@ def piece_necessary_info_together(txt_file_lines,song):
             half_bar_3 = txt_file_lines[ind+2]
             half_bar_4 = txt_file_lines[ind+3]
             bars_all = [half_bar_1,half_bar_2,half_bar_3,half_bar_4]
-            if not are_bars_valid(bars_all):
+            if not are_bars_valid(bars_all,cursing_allowed=wants_curses):
                 continue
             else:
                 break
