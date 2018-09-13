@@ -156,7 +156,7 @@ def get_random_lyric(category_array=[]):
 
             return quote_or_lyric, the_song, author
 
-def drill_down_and_get_file_and_song(category_file_name_arg=None):
+def drill_down_and_get_file_and_song(category_file_name_arg=None,wants_curses=True):
     # the directory of the curent file
     working_dir = os.path.dirname(os.path.abspath(__file__))
     # the data folder
@@ -165,6 +165,7 @@ def drill_down_and_get_file_and_song(category_file_name_arg=None):
     # a random category within the folder
     if not category_file_name_arg:
         # ignore folders that have dots in them, not sure what this would be.
+
         sub_directories_of_data = [sub_dir for sub_dir in os.listdir(data_folder_path) if '.' not in sub_dir]
         catetgory_file_name = random.choice(sub_directories_of_data)
     else:
@@ -174,10 +175,14 @@ def drill_down_and_get_file_and_song(category_file_name_arg=None):
     path_to_chosen_category = data_folder_path + os.sep + catetgory_file_name
     # a random file within the chosen category
     last_file_name = random.choice(os.listdir(path_to_chosen_category))
+    if not wants_curses:
+        song_has_curse_word = contains_curse(last_file_name)
+        while not song_has_curse_word:
+            last_file_name = random.choice(os.listdir(path_to_chosen_category))
+            song_has_curse_word = contains_curse(last_file_name)
     # full path to txt file
     full_path = path_to_chosen_category+os.sep+last_file_name
     logging.debug("Reached full path: {}".format(full_path))
-    # TODO: check if readlines method also closes the folder?
     my_file = open(full_path,'r')
     my_file_lines = my_file.readlines()
     my_file.close()
