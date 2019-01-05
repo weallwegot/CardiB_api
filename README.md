@@ -1,7 +1,11 @@
 # CardiB_api
 
+-------------------------------------
+
+ ### [Project Inspiration](https://andcomputers.io/bars-for-days-chips-with-lays/)
 An api to get a random BAR from a variety of different artists. 
 Cardi B inspired this project about a year ago because literally everyone of her songs had hella quotables in it. Fortunately the service has expanded to include a number of other sources of quotes and bars, but the name persists.
+
 
 
 In the case that you happen to be using this for your teminal at work there is also an option called "safe for work" that can be enabled via post request. Not specifying "sfw" means you are open to the full variety of colorful language included within the API.
