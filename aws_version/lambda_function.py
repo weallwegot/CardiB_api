@@ -52,11 +52,11 @@ def lambda_handler(event, context):
             
             
         elif operation == 'POST':
-            json_data = request.get_json()
+            json_data = json.loads(event['body'])
             if 'method' in json_data.keys() and 'category' in json_data.keys():
                 method_string = json_data['method'] # right now this is unused
                 category_list = json_data['category'] # this is the "category" of quote. could be an artist or genre or inspirational
-                logging.debug('arguments passed: {}'.format(category_list))
+                print('arguments passed: {}'.format(category_list))
                 if len(category_list) == 0:
                     category_list = None
                 lyric, song, artist = get_random_lyric(category_list)
@@ -74,7 +74,7 @@ def lambda_handler(event, context):
                 logging.error(error_msg)
                 payload = {'meta':{'code':400},'error':{'code':400,'message':error_msg}}
                 
-            return response(err=None,res=payload)
+            return respond(err=None,res=payload)
         
         
         return respond(err=None, res=operations[operation])
@@ -136,21 +136,33 @@ def get_random_lyric(category_array=[]):
                 # remove safe for work so it doesnt get picked in the random author selection
                 valid_options_passed_in.remove(SAFE_4_WORK)
             chosen_option = random.choice(list(valid_options_passed_in))
-            all_options_folder_names = os.listdir(data_folder_path)
+
+            all_options_folder_names = my_s3fs.ls(toplevel_dir)
+
+            # to make only check folder names because aws s3fs.ls() returns whole path
+            all_options_folder_names_only = [x.split('/')[-1] for x in all_options_folder_names]
+
             chosen_option_quote = chosen_option+'_quotes'
             chosen_option_lyrics = chosen_option+'_lyrics'
             logging.debug('Chosen option: '+chosen_option)
             logging.debug('valid options passed in: '+str(valid_options_passed_in))
-            if chosen_option_lyrics in all_options_folder_names:
-                the_file,the_song,cat_folder = drill_down_and_get_file_and_song(chosen_option_lyrics)
+            if chosen_option_lyrics in all_options_folder_names_only:
 
-            elif chosen_option in all_options_folder_names:
-                the_file,the_song,cat_folder = drill_down_and_get_file_and_song(chosen_option)
-
-            elif chosen_option_quote in all_options_folder_names:
-                the_file,the_song,cat_folder = drill_down_and_get_file_and_song(chosen_option_quote)
                 
-            quote_or_lyric, author = piece_necessary_info_together(the_file,the_song,wants_curses)
+                the_file_lines,the_song,cat_folder = drill_down_and_get_file_and_song(toplevel_dir+chosen_option_lyrics)
+
+            elif chosen_option in all_options_folder_names_only:
+                
+                the_file_lines,the_song,cat_folder = drill_down_and_get_file_and_song(toplevel_dir+chosen_option)
+
+            elif chosen_option_quote in all_options_folder_names_only:
+                
+                the_file_lines,the_song,cat_folder = drill_down_and_get_file_and_song(toplevel_dir+chosen_option_quote)
+                
+
+            print("File: {}".format(the_file_lines))
+            print("Song: {}".format(the_song))
+            quote_or_lyric, author = piece_necessary_info_together(the_file_lines,the_song,wants_curses)
 
             if not author:
                 # if the author isnt determined in method above then it is the category folder name
@@ -162,10 +174,13 @@ def get_random_lyric(category_array=[]):
                 if author in [' ','']:
                     logging.debug('***** HIT BLANK AUTHOR LOGIC*****')
                     author = cat_folder
+                    author = author.split('/')[-1]
+
+                the_song = the_song.split('/')[-1]
             logging.debug('Returning author: '+author)
-            logging.debug('Cat folder was: '+cat_folder)
-            logging.debug('Returning quote or lyric'+quote_or_lyric)
-            logging.debug('Returning song'+the_song)
+            print('Cat folder was: '+cat_folder)
+            logging.debug('Returning quote or lyric: '+quote_or_lyric)
+            print('Returning song: '+the_song)
 
             return quote_or_lyric, the_song, author
 
@@ -202,14 +217,11 @@ def drill_down_and_get_file_and_song(category_file_name_arg=None,wants_curses=Tr
     # full path to txt file
     #full_path = path_to_chosen_category+os.sep+last_file_name
     full_path = last_file_name
-    logging.debug("Reached full path: {}".format(full_path))
+    print("Reached full path: {}".format(full_path))
     
-    with my_s3fs.open(full_path,'r') as fl:
+    with my_s3fs.open(full_path,'r',errors='ignore') as fl:
         my_file_lines = fl.readlines()
-    
-    #my_file = open(full_path,'r')
-    #my_file_lines = my_file.readlines()
-    #my_file.close()
+
 
     potential_song = ''
     # if the file isnt a lyrics the text file will be saved with a quotes in line ending
@@ -253,14 +265,14 @@ def piece_necessary_info_together(txt_file_lines,song,wants_curses=True):
         while(True):
             # find out where the album info piece is and exclude it from random choice
             try:
-                idx_of_album_info = txt_file_lines.index('ALBUM INFO\r\n')
+                idx_of_album_info = txt_file_lines.index('ALBUM INFO\n')
             except ValueError:
                 #not every text file will have album info i.e. mixtapes and stuff
                 idx_of_album_info = len(txt_file_lines)
 
             num_useful_lines = idx_of_album_info
-            logging.debug("Index of Last Useful Line: {}".format(num_useful_lines))
-            logging.debug("Number of lines in song: {}".format(len(txt_file_lines)))
+            # print("Index of Last Useful Line: {}".format(num_useful_lines))
+            # print("Number of lines in song: {}".format(len(txt_file_lines)))
             # up to the 4 before the end of useful lines so we can construct a whole bar
             ind = random.choice(range(num_useful_lines-4))
             half_bar_1 = txt_file_lines[ind]
