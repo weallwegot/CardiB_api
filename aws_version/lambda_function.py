@@ -9,8 +9,6 @@ import random
 from constants import VALID_OPTIONS, SAFE_4_WORK
 from utilities import contains_curse
 
-print('Loading function')
-
 import boto3 
 s3 = boto3.client("s3")
 my_s3fs = s3fs.S3FileSystem()
@@ -160,7 +158,7 @@ def get_random_lyric(category_array=[]):
                 the_file_lines,the_song,cat_folder = drill_down_and_get_file_and_song(toplevel_dir+chosen_option_quote)
                 
 
-            print("File: {}".format(the_file_lines))
+            print("File Lines: {}".format(the_file_lines))
             print("Song: {}".format(the_song))
             quote_or_lyric, author = piece_necessary_info_together(the_file_lines,the_song,wants_curses)
 
@@ -206,7 +204,9 @@ def drill_down_and_get_file_and_song(category_file_name_arg=None,wants_curses=Tr
     path_to_chosen_category = category_file_name
     #path_to_chosen_category = data_folder_path + os.sep + catetgory_file_name
     # a random file within the chosen category
-    last_file_name = random.choice(my_s3fs.ls(category_file_name))
+    # print("Choices of files: {}".format(my_s3fs.ls(category_file_name)))
+    file_choices = [f for f in my_s3fs.ls(category_file_name) if f.endswith('.txt')]
+    last_file_name = random.choice(file_choices)
     #last_file_name = random.choice(os.listdir(path_to_chosen_category))
     if not wants_curses:
         song_has_curse_word = contains_curse(last_file_name)
@@ -271,8 +271,8 @@ def piece_necessary_info_together(txt_file_lines,song,wants_curses=True):
                 idx_of_album_info = len(txt_file_lines)
 
             num_useful_lines = idx_of_album_info
-            # print("Index of Last Useful Line: {}".format(num_useful_lines))
-            # print("Number of lines in song: {}".format(len(txt_file_lines)))
+            #print("Index of Last Useful Line: {}".format(num_useful_lines))
+            #print("Number of lines in song: {}".format(len(txt_file_lines)))
             # up to the 4 before the end of useful lines so we can construct a whole bar
             ind = random.choice(range(num_useful_lines-4))
             half_bar_1 = txt_file_lines[ind]
