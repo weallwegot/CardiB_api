@@ -108,7 +108,11 @@ def get_random_lyric(category_array=[]):
             # this depends on old naming convention of 'artistname _lyrics'
             # if this returns nothing or blank string, use cat folder
             if author in ['',' ']:
-                author = cat_folder
+                # in AWS this is returning full path, but author is just the last piece
+                author = cat_folder.split('/')[-1]
+            song = song.split('/')[-1]
+
+
 
         logging.debug('Returning author: '+author)
         logging.debug('Cat folder was: '+cat_folder)
