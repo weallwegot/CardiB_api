@@ -169,6 +169,7 @@ def get_random_lyric(category_array=[]):
                 # if the author isnt determined in method above then it is the category folder name
                 # split on _, get rid of 'lyric' or 'quote' [:-1], then make one string joined by space from list
                 author = ' '.join(cat_folder.split('_')[:-1])
+                author = author.split('/')[-1]
                 logging.debug('***** HIT SPLIT AUTHOR LOGIC*****')
                 # this depends on old naming convention of 'artistname _lyrics'
                 # if this returns nothing or blank string, use cat folder
