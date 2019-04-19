@@ -23,7 +23,8 @@ def respond(err, res=None):
         'body': err.message if err else json.dumps(res),
         'headers': {
             'Content-Type': 'application/json',
-            "Access-Control-Allow-Origin": "*"  # Required for CORS support to work
+            "Access-Control-Allow-Origin": "*",  # Required for CORS support to work
+            "Access-Control-Allow-Credentials": True
         },
     }
 
@@ -51,6 +52,7 @@ def lambda_handler(event, context):
             return respond(err=None, res=payload)
 
         elif operation == 'POST':
+            print("Event Body {}".format(event['body']))
             json_data = json.loads(event['body'])
             if 'method' in json_data.keys() and 'category' in json_data.keys():
                 method_string = json_data['method']  # right now this is unused
@@ -141,6 +143,7 @@ def get_random_lyric(category_array=[]):
 
             chosen_option_quote = chosen_option + '_quotes'
             chosen_option_lyrics = chosen_option + '_lyrics'
+            chosen_option_underscores = chosen_option.replace('_', '-')
             print('Chosen option: ' + chosen_option)
             print('valid options passed in: ' + str(valid_options_passed_in))
             if chosen_option_lyrics in all_options_folder_names_only:
@@ -156,6 +159,14 @@ def get_random_lyric(category_array=[]):
 
                 the_file_lines, the_song, cat_folder = drill_down_and_get_file_and_song(
                     toplevel_dir + chosen_option_quote)
+
+            elif chosen_option_underscores in all_options_folder_names_only:
+                the_file_lines, the_song, cat_folder = drill_down_and_get_file_and_song(
+                    toplevel_dir + chosen_option_underscores)
+
+            else:
+                print("{}, {}, {}, {} were not found in available folders").format(
+                    chosen_option, chosen_option_lyrics, chosen_option_lyrics, chosen_option_underscores)
 
             print("all_options_folder_names_only: {}".format(all_options_folder_names_only))
             print("chosen_option: {}".format(chosen_option))
@@ -270,16 +281,23 @@ def piece_necessary_info_together(txt_file_lines, song, wants_curses=True):
     # if it is a song expect the bar format, where 2 lines make a bar
     if len(song) > 0:
         while(True):
+
+            # print("Number of lines in song: {}".format(len(txt_file_lines)))
+            if len(txt_file_lines) == 1:
+                txt_file_lines = txt_file_lines[0].split("\\n")
+                print("Number of lines in song after splitting: {}".format(len(txt_file_lines)))
+
             # find out where the album info piece is and exclude it from random choice
             try:
-                idx_of_album_info = txt_file_lines.index('ALBUM INFO\n')
-            except ValueError:
+                # better chance of finding album info
+                idx_of_album_info = txt_file_lines.index([x for x in txt_file_lines if "ALBUM INFO" in x][0])
+            except (IndexError, ValueError):
                 # not every text file will have album info i.e. mixtapes and stuff
                 idx_of_album_info = len(txt_file_lines)
 
             num_useful_lines = idx_of_album_info
             #print("Index of Last Useful Line: {}".format(num_useful_lines))
-            #print("Number of lines in song: {}".format(len(txt_file_lines)))
+
             # up to the 4 before the end of useful lines so we can construct a whole bar
             ind = random.choice(range(num_useful_lines - 4))
             half_bar_1 = txt_file_lines[ind]
@@ -292,7 +310,17 @@ def piece_necessary_info_together(txt_file_lines, song, wants_curses=True):
                 continue
             else:
                 break
-        bar = half_bar_1 + half_bar_2 + half_bar_3 + half_bar_4
+        # add line breaks if they dont already exist
+        #bars_all = [x+"\n" for x in bars_all if not x.endswith("\n")]
+        bars_processed = []
+        bar = ""
+        for half_bar in bars_all:
+            x = half_bar + "\n" if not half_bar.endswith("\n") else half_bar
+            x = x.replace("\r", "").replace("\'", "'").replace("\\'", "'").replace("\\r", "")
+            # bars_processed.append(x)
+            bar += x
+        #bar = half_bar_1 + half_bar_2 + half_bar_3 + half_bar_4
+        #bar = " ".join(bars_all)
         logging.info("Valid bar composed: {}".format(bar))
         author = None
         # author is left blank bc its a song, the author is in the parent directory name
