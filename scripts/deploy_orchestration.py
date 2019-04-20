@@ -41,13 +41,15 @@ def is_func_new(funcname):
     --function-name {fname}".format(
         fname=funcname
     )
-    process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-    output, error = process.communicate()
-    # print(output)
-    # if the error is raised it means the functions does not exist
-    if error:
-        logging.error(error)
+
+    try:
+        subprocess.check_output(bashCommand.split())
+    except subprocess.CalledProcessError as e:
+        # if the error is raised it means the functions does not exist
+        logging.error(e)
+        print("returning True")
         return True
+    print("returning False")
     return False
 
 
