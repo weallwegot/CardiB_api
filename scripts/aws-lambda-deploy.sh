@@ -40,7 +40,7 @@ zip -g function.zip "$HANDLER_FILE_NAME.py"
 
 
 
-
+echo "Is new: $ISNEW" >&2
 if [ $ISNEW == "True" ]
 then
 echo "deploying brand new function" >&2
