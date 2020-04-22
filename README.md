@@ -16,7 +16,7 @@ In the case that you happen to be using this for your teminal at work there is a
 - See [issues](https://github.com/weallwegot/CardiB_api/issues)
 
 ~~# Live at http://cardibbars.pythonanywhere.com/api/v1~~
-# Migrated to https://a3odwonexi.execute-api.us-east-2.amazonaws.com/default/Bars_API
+# Migrated to [AWS](https://a3odwonexi.execute-api.us-east-2.amazonaws.com/default/Bars_API)
 
 If you send a `GET` request the api will return a quote from any of those categories/people (curses words are highly probable)
 
